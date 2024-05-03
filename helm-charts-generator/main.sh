@@ -54,6 +54,10 @@ echo -e "\n📝 Adding index for application: $app_name\n"
 
 helm repo index $OUTPUT_DIRECTORY
 
+echo -e "\n🔑 Connect to Helm Repository\n"
+
+argocd repo add https://42cluster-seoul.github.io/helm-charts/stable
+
 echo -e "\n🚀 Applying for application: $app_name-application.yaml\n"
 
 kubectl create -f $DESTINATION_DIRECTORY/$app_name-applcation.yaml
