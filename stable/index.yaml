@@ -3,12 +3,12 @@ entries:
   demo-nginx:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-05-03T21:53:53.714907+09:00"
+    created: "2024-05-03T22:11:54.698442+09:00"
     description: A Helm chart for Kubernetes
-    digest: c1a1b42e671061f33db1d283e46eef63317a9d48207c0c82362e75366806091e
+    digest: 71da03689d762c52eb8855724f6d71b3dfe78b55b9c140e902c64728f72c61b6
     name: demo-nginx
     type: application
     urls:
     - demo-nginx-0.1.0.tgz
     version: 0.1.0
-generated: "2024-05-03T21:53:53.714499+09:00"
+generated: "2024-05-03T22:11:54.698041+09:00"

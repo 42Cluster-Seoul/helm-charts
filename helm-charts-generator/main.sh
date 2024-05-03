@@ -38,6 +38,8 @@ sed -i.tmp "s/\${app_name}/$app_name/g" "$DESTINATION_DIRECTORY/templates/applic
 
 rm -f "$DESTINATION_DIRECTORY/templates/application.yaml.tmp"
 
+mv "$DESTINATION_DIRECTORY/templates/application.yaml" "$DESTINATION_DIRECTORY/$app_name-applcation.yaml"
+
 echo -e "\n🪽 New Helm Charts created with app name: $app_name \n"
 
 echo -e "✅ Lint Check for application: $app_name\n"
