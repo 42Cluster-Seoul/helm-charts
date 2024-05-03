@@ -56,4 +56,4 @@ helm repo index $OUTPUT_DIRECTORY
 
 echo -e "\n🚀 Applying for application: $app_name-application.yaml\n"
 
-kubectl apply -f $DESTINATION_DIRECTORY/$app_name-applcation.yaml
+kubectl create -f $DESTINATION_DIRECTORY/$app_name-applcation.yaml
