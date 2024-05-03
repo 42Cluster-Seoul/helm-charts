@@ -34,6 +34,10 @@ rm -f "$OUTPUT_CHARTS_FILE.tmp" "$OUTPUT_VALUES_FILE.tmp"
 
 cp -r "$HELM_TEMPLATES_DIRECTORY" "$DESTINATION_DIRECTORY"
 
+sed -i.tmp "s/\${app_name}/$app_name/g" "$DESTINATION_DIRECTORY/templates/application.yaml"
+
+rm -f "$DESTINATION_DIRECTORY/templates/application.yaml.tmp"
+
 echo -e "\n🪽 New Helm Charts created with app name: $app_name \n"
 
 echo -e "✅ Lint Check for application: $app_name\n"
