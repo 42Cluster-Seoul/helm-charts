@@ -53,3 +53,7 @@ helm package $DESTINATION_DIRECTORY -d $OUTPUT_DIRECTORY
 echo -e "\n📝 Adding index for application: $app_name\n"
 
 helm repo index $OUTPUT_DIRECTORY
+
+echo -e "\n🚀 Applying for application: $app_name-application.yaml\n"
+
+kubectl apply -f $DESTINATION_DIRECTORY/$app_name-applcation.yaml
