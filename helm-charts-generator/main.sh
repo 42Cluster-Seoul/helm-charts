@@ -1,5 +1,7 @@
+read -p "Enter the value for application name: " app_name
+
 # Variables 
-OUTPUT_DIRECTORY="output"
+OUTPUT_DIRECTORY="../stable/$app_name"
 OUTPUT_CHARTS_FILE="$OUTPUT_DIRECTORY/Chart.yaml"
 OUTPUT_VALUES_FILE="$OUTPUT_DIRECTORY/values.yaml"
 HELM_TEMPLATES_DIRECTORY="template/templates"
@@ -14,7 +16,6 @@ fi
 cp template/values.yaml.template $OUTPUT_VALUES_FILE
 cp template/Chart.yaml.template $OUTPUT_CHARTS_FILE
 
-read -p "Enter the value for application name: " app_name
 sed -i.tmp "s/\${app_name}/$app_name/g" $OUTPUT_CHARTS_FILE
 
 read -p "Enter replicas count: " replicas_count
@@ -37,3 +38,7 @@ echo -e "\n🪽 New Helm Charts created with app name: $app_name \n"
 echo -e "✅ Lint Check for application: $app_name\n"
 
 helm lint $OUTPUT_DIRECTORY
+
+echo -e "📦 Packaging for application: $app_name\n"
+
+helm package $OUTPUT_DIRECTORY -d $OUTPUT_DIRECTORY
