@@ -1,16 +1,17 @@
 read -p "Enter the value for application name: " app_name
 
 # Variables 
-OUTPUT_DIRECTORY="../stable/$app_name"
-OUTPUT_CHARTS_FILE="$OUTPUT_DIRECTORY/Chart.yaml"
-OUTPUT_VALUES_FILE="$OUTPUT_DIRECTORY/values.yaml"
+OUTPUT_DIRECTORY="../stable"
+DESTINATION_DIRECTORY="$OUTPUT_DIRECTORY/$app_name"
+OUTPUT_CHARTS_FILE="$DESTINATION_DIRECTORY/Chart.yaml"
+OUTPUT_VALUES_FILE="$DESTINATION_DIRECTORY/values.yaml"
 HELM_TEMPLATES_DIRECTORY="template/templates"
 
-if [ ! -d "$OUTPUT_DIRECTORY" ]; then
-  mkdir -p "$OUTPUT_DIRECTORY"
+if [ ! -d "$DESTINATION_DIRECTORY" ]; then
+  mkdir -p "$DESTINATION_DIRECTORY"
 else
-  rm -rf "$OUTPUT_DIRECTORY"
-  mkdir -p "$OUTPUT_DIRECTORY"
+  rm -rf "$DESTINATION_DIRECTORY"
+  mkdir -p "$DESTINATION_DIRECTORY"
 fi
 
 cp template/values.yaml.template $OUTPUT_VALUES_FILE
@@ -31,14 +32,18 @@ sed -i.tmp \
 
 rm -f "$OUTPUT_CHARTS_FILE.tmp" "$OUTPUT_VALUES_FILE.tmp"
 
-cp -r "$HELM_TEMPLATES_DIRECTORY" "$OUTPUT_DIRECTORY"
+cp -r "$HELM_TEMPLATES_DIRECTORY" "$DESTINATION_DIRECTORY"
 
 echo -e "\n🪽 New Helm Charts created with app name: $app_name \n"
 
 echo -e "✅ Lint Check for application: $app_name\n"
 
-helm lint $OUTPUT_DIRECTORY
+helm lint $DESTINATION_DIRECTORY
 
-echo -e "📦 Packaging for application: $app_name\n"
+echo -e "\n📦 Packaging for application: $app_name\n"
 
-helm package $OUTPUT_DIRECTORY -d $OUTPUT_DIRECTORY
+helm package $DESTINATION_DIRECTORY -d $OUTPUT_DIRECTORY
+
+echo -e "\n📝 Adding index for application: $app_name\n"
+
+helm repo index $OUTPUT_DIRECTORY
