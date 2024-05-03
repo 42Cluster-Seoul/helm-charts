@@ -19,7 +19,7 @@ ingress:
   enabled: true
   className: nginx
   host: ""
-  path: ""
+  path: /
   pathType: Prefix
 
 service:
