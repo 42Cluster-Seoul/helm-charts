@@ -6,6 +6,7 @@ DESTINATION_DIRECTORY="$OUTPUT_DIRECTORY/$app_name"
 OUTPUT_CHARTS_FILE="$DESTINATION_DIRECTORY/Chart.yaml"
 OUTPUT_VALUES_FILE="$DESTINATION_DIRECTORY/values.yaml"
 HELM_TEMPLATES_DIRECTORY="template/templates"
+GITHUB_REPOSITORY="https://github.com/42Cluster-Seoul/helm-charts"
 
 if [ ! -d "$DESTINATION_DIRECTORY" ]; then
   mkdir -p "$DESTINATION_DIRECTORY"
@@ -38,7 +39,7 @@ sed -i.tmp "s/\${app_name}/$app_name/g" "$DESTINATION_DIRECTORY/templates/applic
 
 rm -f "$DESTINATION_DIRECTORY/templates/application.yaml.tmp"
 
-mv "$DESTINATION_DIRECTORY/templates/application.yaml" "$DESTINATION_DIRECTORY/$app_name-applcation.yaml"
+mv "$DESTINATION_DIRECTORY/templates/application.yaml" "$OUTPUT_DIRECTORY/$app_name-applcation.yaml"
 
 echo -e "\n🪽 New Helm Charts created with app name: $app_name \n"
 
@@ -46,18 +47,12 @@ echo -e "✅ Lint Check for application: $app_name\n"
 
 helm lint $DESTINATION_DIRECTORY
 
-echo -e "\n📦 Packaging for application: $app_name\n"
+echo -e "⏫ Uploading Helm Chart to Github Repository: $GITHUB_REPOSITORY \n"
 
-helm package $DESTINATION_DIRECTORY -d $OUTPUT_DIRECTORY
-
-echo -e "\n📝 Adding index for application: $app_name\n"
-
-helm repo index $OUTPUT_DIRECTORY
-
-echo -e "\n🔑 Connect to Helm Repository\n"
-
-argocd repo add https://42cluster-seoul.github.io/helm-charts/stable
+git add $OUTPUT_DIRECTORY
+git commit -m "Added new application: $app_name"
+git push origin main
 
 echo -e "\n🚀 Applying for application: $app_name-application.yaml\n"
 
-kubectl create -f $DESTINATION_DIRECTORY/$app_name-applcation.yaml
+kubectl create -f $OUTPUT_DIRECTORY/$app_name-applcation.yaml
