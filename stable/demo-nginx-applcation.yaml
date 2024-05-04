@@ -2,13 +2,16 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: demo-nginx
-  namespace: default
+  namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://42cluster-seoul.github.io/helm-charts/stable
-    chart: demo-nginx
-    targetRevision: 0.1.0
+    path: stable/demo-nginx
+    repoURL: https://github.com/42Cluster-Seoul/helm-charts
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: default
