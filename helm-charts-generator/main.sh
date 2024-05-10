@@ -87,6 +87,26 @@ display_applications() {
   argocd app list
 }
 
+delete_application() {
+  local output=$(argocd app list)
+  local total_apps=$(echo "$output" | awk 'END {print NR-1}')
+  if [ $total_apps -eq 0 ]; then
+    echo "❌ No applications found."
+  else
+    local app_names=$(argocd app list | awk 'NR > 1 {print $1}')
+    IFS=$'\n' read -d '' -r -a app_array <<< "$app_names"
+    local length=${#app_array[@]}
+
+    for ((i=0; i<$length; i++)); do
+      echo "$(($i+1))) ${app_array[$i]}"
+    done
+    read -p "Enter the application number to delete: " app_number
+    local app_name=${app_array[$((app_number-1))]}
+    echo $app_name
+    argocd app delete $app_name
+  fi
+}
+
 main() {
   echo "🚀 Helm Charts Generator"
   echo "========================"
@@ -110,6 +130,8 @@ main() {
               ;;
           2)
               argocd_login
+              display_applications
+              delete_application
               ;;
           3)
               argocd_login
