@@ -83,6 +83,10 @@ argocd_login() {
   fi
 }
 
+display_applications() {
+  argocd app list
+}
+
 main() {
   echo "🚀 Helm Charts Generator"
   echo "========================"
@@ -109,7 +113,7 @@ main() {
               ;;
           3)
               argocd_login
-              
+              display_applications
               ;;
           4)
               echo "❌ Exiting program"
