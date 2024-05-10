@@ -73,6 +73,16 @@ create_application() {
   kubectl create -f $OUTPUT_DIRECTORY/$app_name-applcation.yaml
 }
 
+argocd_login() {
+  if argocd app list > /dev/null 2>&1; then
+    echo "🔑 ArgoCD is already logged in."
+  else
+    echo "🔑 Logging into ArgoCD"
+    local argocd_server=$(kubectl get svc argocd-server -n argocd | awk 'NR==2 {print $3}')
+    argocd login $argocd_server
+  fi
+}
+
 main() {
   echo "🚀 Helm Charts Generator"
   echo "========================"
@@ -95,10 +105,11 @@ main() {
               create_application
               ;;
           2)
-              echo "You chose Option 2"
+              argocd_login
               ;;
           3)
-              echo "You chose Option 3"
+              argocd_login
+              
               ;;
           4)
               echo "❌ Exiting program"
