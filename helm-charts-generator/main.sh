@@ -54,7 +54,7 @@ create_application() {
 
   rm -f "$DESTINATION_DIRECTORY/templates/application.yaml.tmp"
 
-  mv "$DESTINATION_DIRECTORY/templates/application.yaml" "$OUTPUT_DIRECTORY/$app_name-applcation.yaml"
+  mv "$DESTINATION_DIRECTORY/templates/application.yaml" "$OUTPUT_DIRECTORY/$app_name-application.yaml"
 
   echo -e "\n🪽 New Helm Charts created with app name: $app_name \n"
 
