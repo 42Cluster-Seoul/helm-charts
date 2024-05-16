@@ -2,7 +2,7 @@ app:
   name: "spring"
   replicas: 1
   image: "738612635754.dkr.ecr.ap-northeast-2.amazonaws.com/stecr:latest"
-  port: 80
+  port: 8080
   resources: 
     requests:
       cpu: "1m"
