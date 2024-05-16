@@ -16,7 +16,7 @@ podLabels:
   tier: backend
 
 ingress:
-  enabled: false
+  enabled: true
   className: alb
   host: ""
   path: /
