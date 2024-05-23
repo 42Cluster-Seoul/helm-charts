@@ -21,6 +21,10 @@ ingress:
   host: "www.42cluster.com"
   path: /spring
   pathType: Prefix
+  groupName: 42cluster
+  groupOrder: "5"
+  certificateArn: "arn:aws:acm:ap-northeast-2:616676703442:certificate/28c95859-9030-43d4-baf5-9daec0b99deb"
+
 
 service:
   enabled: true
