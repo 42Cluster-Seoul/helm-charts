@@ -18,8 +18,8 @@ podLabels:
 ingress:
   enabled: true
   className: alb
-  host: ""
-  path: /
+  host: "www.42cluster.com"
+  path: /spring
   pathType: Prefix
 
 service:
