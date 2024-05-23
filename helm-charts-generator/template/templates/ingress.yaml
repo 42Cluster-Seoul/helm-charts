@@ -3,8 +3,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    alb.ingress.kubernetes.io/group.name: {{ .Values.ingress.groupName | quote }}
+    alb.ingress.kubernetes.io/group.order: {{ .Values.ingress.groupOrder | quote }}
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: "ip"
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/backend-protocol: "HTTP"
+    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.ingress.certificateArn }}
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
   name: {{ .Values.app.name }}
-  namespace: {{ .Release.Namespace | quote }}
+  namespace: {{ .Values.app.name }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   rules:

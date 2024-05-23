@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.app.name }}
   labels:
     app: {{ .Values.app.name }}
-  namespace: {{ .Release.Namespace | quote }}
+  namespace: {{ .Values.app.name }}
 spec:
   replicas: {{ .Values.app.replicas }}
   selector:
@@ -22,6 +22,8 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      imagePullSecrets:
+        - name: {{ .Values.app.name }}
       containers:
       - image: {{ .Values.app.image }}
         name: {{ .Values.app.name }}

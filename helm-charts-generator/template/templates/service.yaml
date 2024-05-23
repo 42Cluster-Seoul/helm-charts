@@ -5,7 +5,7 @@ metadata:
   labels:
     app: {{ .Values.app.name }}
   name: {{ .Values.app.name }}
-  namespace: {{ .Release.Namespace | quote }}
+  namespace: {{ .Values.app.name }}
 spec:
   ports:
   - port: {{ .Values.service.port }}
