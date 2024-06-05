@@ -3,7 +3,7 @@ app:
   replicas: 1
   image: "nginx:stable-perl"
   port: 80
-  resources: 
+  resources:
     requests:
       cpu: "1m"
       memory: "128Mi"
@@ -15,12 +15,12 @@ podAnnotations: {}
 podLabels:
   tier: backend
 
-ingress:
-  enabled: true
-  className: nginx
-  host: ""
-  path: /
-  pathType: Prefix
+# ingress:
+#   enabled: true
+#   className: nginx
+#   host: ""
+#   path: /
+#   pathType: Prefix
 
 service:
   enabled: true
