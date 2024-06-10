@@ -1,0 +1,9 @@
+apiVersion: v2
+name: demo-cm
+description: A Helm chart for creating configmap by loading regular files from a directory
+
+type: application
+
+version: 0.1.0
+
+appVersion: "1.0.0"
