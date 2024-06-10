@@ -8,7 +8,9 @@ metadata:
     app.kubernetes.io/part-of: argocd
 data:
   policy.csv: |-
-    {{- $files := .Files }}
-    {{- range tuple "mogle.csv" }}
-    {{ $files.Get . | indent 4 }}
+    {{ $currentScope := .}}
+    {{- range $path, $_ := .Files.Glob "rbac-csv/*.csv" }}
+      {{- with $currentScope }}
+          {{ .Files.Get $path }}
+      {{- end }}
     {{- end }}
