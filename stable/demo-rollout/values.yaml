@@ -18,7 +18,7 @@ podLabels:
 ingress:
   enabled: true
   className: nginx
-  host: "morning-glory.com"
+  host: "joonhan.link"
   path: /
   pathType: Prefix
 
