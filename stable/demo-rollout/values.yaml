@@ -15,12 +15,12 @@ podAnnotations: {}
 podLabels:
   tier: backend
 
-# ingress:
-#   enabled: true
-#   className: nginx
-#   host: ""
-#   path: /
-#   pathType: Prefix
+ingress:
+  enabled: true
+  className: nginx
+  host: "morning-glory.com"
+  path: /
+  pathType: Prefix
 
 service:
   enabled: true
