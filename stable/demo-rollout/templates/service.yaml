@@ -28,7 +28,6 @@ spec:
     protocol: TCP
     name: http
     targetPort: {{ .Values.app.port }}
-  type: NodePort
   selector:
     app: {{ .Values.app.name }}
 {{- end }}
