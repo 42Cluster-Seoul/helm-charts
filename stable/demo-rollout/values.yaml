@@ -2,7 +2,7 @@ app:
   name: "demo-rollout"
   replicas: 1
   image: "argoproj/rollouts-demo:blue"
-  port: 80
+  port: 8080
   resources:
     requests:
       cpu: "1m"
