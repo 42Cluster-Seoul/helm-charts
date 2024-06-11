@@ -4,7 +4,7 @@ metadata:
   name: demo-rollout
   namespace: argocd
 spec:
-  project: default
+  project: demo-project
   source:
     path: stable/demo-rollout
     repoURL: https://github.com/42Cluster-Seoul/helm-charts
