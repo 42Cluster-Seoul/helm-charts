@@ -18,7 +18,7 @@ podLabels:
 ingress:
   enabled: true
   className: nginx
-  host: "joonhan.link"
+  host: "localhost"
   path: /
   pathType: Prefix
 
