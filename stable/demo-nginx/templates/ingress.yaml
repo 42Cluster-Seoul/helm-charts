@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.app.name }}-stable
   namespace: {{ .Release.Namespace }}
   annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
     kubernetes.io/ingress.class: {{ .Values.ingress.className }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
