@@ -1,0 +1,27 @@
+app:
+  name: "demo-rollout"
+  replicas: 1
+  image: "argoproj/rollouts-demo:blue"
+  port: 80
+  resources:
+    requests:
+      cpu: "1m"
+      memory: "128Mi"
+    limits:
+      cpu: "1m"
+      memory: "128Mi"
+
+podAnnotations: {}
+podLabels:
+  tier: backend
+
+# ingress:
+#   enabled: true
+#   className: nginx
+#   host: ""
+#   path: /
+#   pathType: Prefix
+
+service:
+  enabled: true
+  port: 80
