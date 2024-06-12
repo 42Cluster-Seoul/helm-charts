@@ -18,9 +18,6 @@ spec:
     canary:
       canaryService: {{ .Values.app.name }}-canary
       stableService: {{ .Values.app.name }}-stable
-      trafficRouting:
-        nginx:
-          stableIngress: {{ .Values.app.name }}-stable
       steps:
         - setWeight: 20
         - pause: {}
