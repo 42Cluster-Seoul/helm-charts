@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-rollout
+  namespace: argocd
+spec:
+  project: demo-project
+  source:
+    path: stable/demo-rollout-without-ingress
+    repoURL: https://github.com/42Cluster-Seoul/helm-charts
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: morning-glory
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
