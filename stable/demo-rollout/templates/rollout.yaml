@@ -21,7 +21,7 @@ spec:
       trafficRouting:
         nginx:
           stableIngress: {{ .Values.app.name }}-stable
-      stpes:
+      steps:
         - setWeight: 20
         - pause: {}
         - setWeight: 40
