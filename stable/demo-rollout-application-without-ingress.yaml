@@ -16,6 +16,4 @@ spec:
     server: https://kubernetes.default.svc
     namespace: morning-glory
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    automated: {}
