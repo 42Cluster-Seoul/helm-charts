@@ -1,8 +1,8 @@
 app:
   name: "demo-rollout"
   replicas: 1
-  image: "argoproj/rollouts-demo:green"
-  port: 8080
+  image: "nginx:stable-alpine-perl"
+  port: 80
   resources:
     requests:
       cpu: "1m"
