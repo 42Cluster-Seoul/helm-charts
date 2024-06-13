@@ -1,6 +1,6 @@
 app:
   name: "demo-rollout"
-  replicas: 5
+  replicas: 1
   image: "argoproj/rollouts-demo:green"
   port: 8080
   resources:
