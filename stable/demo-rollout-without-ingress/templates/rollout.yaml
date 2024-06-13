@@ -20,13 +20,13 @@ spec:
       stableService: {{ .Values.app.name }}-stable
       steps:
         - setWeight: 20
-        - pause: {}
+        - pause: {duration: 30s}
         - setWeight: 40
-        - pause: {duration: 5s}
+        - pause: {duration: 30s}
         - setWeight: 60
-        - pause: {duration: 5s}
+        - pause: {duration: 30s}
         - setWeight: 80
-        - pause: {duration: 5s}
+        - pause: {duration: 30s}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
