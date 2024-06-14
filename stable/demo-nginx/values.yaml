@@ -1,6 +1,6 @@
 app:
   name: "demo-nginx"
-  replicas: 1
+  replicas: 3
   image: "nginx:stable-perl"
   port: 80
   resources:
