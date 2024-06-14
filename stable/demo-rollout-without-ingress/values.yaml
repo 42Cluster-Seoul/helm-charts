@@ -1,7 +1,7 @@
 app:
   name: "demo-rollout"
   replicas: 1
-  image: "nginx:stable-alpine-perl"
+  image: "giafar/nginx:1.25.1-tcpdump"
   port: 80
   resources:
     requests:
