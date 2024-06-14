@@ -1,7 +1,7 @@
 app:
   name: "demo-nginx"
   replicas: 3
-  image: "nginx:stable-perl"
+  image: "nginx:1.27.0-perl"
   port: 80
   resources:
     requests:
