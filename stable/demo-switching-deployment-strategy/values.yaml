@@ -1,0 +1,27 @@
+app:
+  name: "demo-nginx"
+  replicas: 3
+  image: "nginx:1.27.0-perl"
+  port: 80
+  resources:
+    requests:
+      cpu: "1m"
+      memory: "128Mi"
+    limits:
+      cpu: "1m"
+      memory: "128Mi"
+
+podAnnotations: {}
+podLabels:
+  tier: backend
+
+ingress:
+  enabled: true
+  className: nginx
+  host: ""
+  path: /
+  pathType: Prefix
+
+service:
+  enabled: true
+  port: 80
