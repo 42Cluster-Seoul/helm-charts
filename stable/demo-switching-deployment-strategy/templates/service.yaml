@@ -4,7 +4,23 @@ kind: Service
 metadata:
   labels:
     app: {{ .Values.app.name }}
-  name: {{ .Values.app.name }}
+  name: {{ .Values.app.name }}-canary
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  ports:
+  - port: {{ .Values.service.port }}
+    protocol: TCP
+    name: http
+    targetPort: {{ .Values.app.port }}
+  selector:
+    app: {{ .Values.app.name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.app.name }}
+  name: {{ .Values.app.name }}-stable
   namespace: {{ .Release.Namespace | quote }}
 spec:
   ports:

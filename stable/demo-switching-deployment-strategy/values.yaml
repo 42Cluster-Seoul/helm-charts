@@ -1,7 +1,7 @@
 app:
   name: "demo-nginx"
   replicas: 3
-  image: "nginx:1.27.0-perl"
+  image: "giafar/nginx:1.25.1-tcpdump"
   port: 80
   resources:
     requests:
@@ -14,13 +14,6 @@ app:
 podAnnotations: {}
 podLabels:
   tier: backend
-
-ingress:
-  enabled: true
-  className: nginx
-  host: ""
-  path: /
-  pathType: Prefix
 
 service:
   enabled: true
