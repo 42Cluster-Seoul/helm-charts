@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.frontend.name }}
+  labels:
+    app: {{ .Values.app.frontend.name }}
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  replicas: {{ .Values.app.frontend.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.frontend.name }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+      {{- end }}
+      labels:
+        app: {{ .Values.app.frontend.name }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+      - image: {{ .Values.app.frontend.image }}
+        name: {{ .Values.app.frontend.name }}
+        {{- with .Values.app.frontend.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: {{ .Values.app.frontend.port }}
+          
