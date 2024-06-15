@@ -33,3 +33,60 @@ spec:
           - name: http
             protocol: TCP
             containerPort: {{ .Values.app.backend.port }}
+        env:
+          - name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: DATABASE_URL
+          - name: REDIRECT_URI
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: REDIRECT_URI
+          - name: AUTHORIZATION_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: AUTHORIZATION_URL
+          - name: TOKEN_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: TOKEN_URL
+          - name: USER_INFO_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: USER_INFO_URL
+          - name: JWT_SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: JWT_SECRET
+          - name: WEATHER_API
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: WEATHER_API
+          - name: UMBRELLA_CHANNEL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: UMBRELLA_CHANNEL
+          - name: FRONTEND_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: FRONTEND_URL
+          - name: PAYLOAD_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: PAYLOAD_CLIENT_ID
+          - name: PAYLOAD_CLIENT_SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: PAYLOAD_CLIENT_SECRET
+          
