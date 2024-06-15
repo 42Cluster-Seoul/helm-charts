@@ -1,7 +1,7 @@
 app:
   name: "open-umbrella"
-  configMapName: "umb-backend"
   backend:
+    configMapName: "umb-backend"
     name: "open-umbrella-backend"
     replicas: 1
     image: "joonhyeokhan/openumbrella-backend:latest"
