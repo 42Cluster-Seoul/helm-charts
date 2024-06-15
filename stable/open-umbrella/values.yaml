@@ -1,4 +1,5 @@
 app:
+  name: "open-umbrella"
   backend:
     name: "open-umbrella-backend"
     replicas: 1
