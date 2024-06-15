@@ -34,7 +34,7 @@ ingress:
   enabled: true
   className: alb
   host: "www.42cluster.com"
-  path: /open-umbrella
+  path: /
   pathType: Prefix
   groupName: "cluster42"
   groupOrder: "6"
