@@ -1,0 +1,31 @@
+app:
+  backend:
+    name: "open-umbrella-backend"
+    replicas: 1
+    image: "joonhyeokhan/openumbrella-backend:latest"
+    port: 3000
+    resources:
+      requests:
+        cpu: "25m"
+        memory: "32Mi"
+      limits:
+        cpu: "250m"
+        memory: "64Mi"
+
+podAnnotations: {}
+podLabels:
+  tier: backend
+
+ingress:
+  enabled: true
+  className: alb
+  host: "www.42cluster.com"
+  path: /open-umbrella
+  pathType: Prefix
+  groupName: "cluster42"
+  groupOrder: "6"
+  certificateArn: "arn:aws:acm:ap-northeast-2:738612635754:certificate/f0377659-182c-4057-a5e9-4d6488a232e2"
+
+service:
+  enabled: true
+  port: 80
