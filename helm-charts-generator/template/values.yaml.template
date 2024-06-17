@@ -17,10 +17,14 @@ podLabels:
 
 ingress:
   enabled: true
-  className: nginx
+  className: alb
   host: ""
   path: /
   pathType: Prefix
+  groupName: ""
+  groupOrder: ""
+  certificateArn: ""
+
 
 service:
   enabled: true

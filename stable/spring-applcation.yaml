@@ -1,22 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ${app_name}
-  namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  name: spring
+  namespace: spring
 spec:
   project: default
   source:
-    path: stable/${app_name}
+    path: stable/spring
     repoURL: https://github.com/42Cluster-Seoul/helm-charts
-    targetRevision: seongtki # HEAD
+    targetRevision: seongtki
     helm:
       valueFiles:
       - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: ${app_name}
+    namespace: spring
   syncPolicy:
     automated:
       prune: true
