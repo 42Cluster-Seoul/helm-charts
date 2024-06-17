@@ -9,6 +9,7 @@ metadata:
     heritage: {{ .Release.Service }}
   annotations:
     notifications.argoproj.io/subscribe.on-sync-succeeded.slack-webhook: ""
+    notifications.argoproj.io/subscribe.on-rollout-completed.slack-webhook: ""
 spec:
   replicas: {{ .Values.app.replicas }}
   revisionHistoryLimit: 3
@@ -22,13 +23,13 @@ spec:
       stableService: {{ .Values.app.name }}-stable
       steps:
         - setWeight: 20
-        - pause: {duration: 5s}
+        - pause: {duration: 2s}
         - setWeight: 40
-        - pause: {duration: 5s}
+        - pause: {duration: 2s}
         - setWeight: 60
-        - pause: {duration: 5s}
+        - pause: {duration: 2s}
         - setWeight: 80
-        - pause: {duration: 5s}
+        - pause: {duration: 2s}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
