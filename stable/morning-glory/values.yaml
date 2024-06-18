@@ -1,0 +1,33 @@
+app:
+  name: "morning-glory"
+  backend:
+    configMapName: "umb-backend"
+    name: "morning-glory-backend"
+    replicas: 1
+    image: "joonhyeokhan/mogle-backend:latest"
+    port: 3001
+    resources:
+      requests:
+        cpu: "25m"
+        memory: "32Mi"
+      limits:
+        cpu: "250m"
+        memory: "64Mi"
+
+podAnnotations: {}
+podLabels:
+  tier: backend
+
+ingress:
+  enabled: true
+  className: alb
+  host: "www.42cluster.com"
+  path: /api
+  pathType: Prefix
+  groupName: "cluster42"
+  groupOrder: "7"
+  certificateArn: "arn:aws:acm:ap-northeast-2:738612635754:certificate/f0377659-182c-4057-a5e9-4d6488a232e2"
+
+service:
+  enabled: true
+  port: 80
