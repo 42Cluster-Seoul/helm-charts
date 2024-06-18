@@ -1,7 +1,7 @@
 app:
   name: "morning-glory"
   backend:
-    configMapName: "umb-backend"
+    configMapName: "mogle-backend-cm"
     name: "morning-glory-backend"
     replicas: 1
     image: "joonhyeokhan/mogle-backend:latest"
