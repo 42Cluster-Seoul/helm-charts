@@ -22,7 +22,7 @@ ingress:
   enabled: true
   className: alb
   host: "www.42cluster.com"
-  path: /api
+  path: /
   pathType: Prefix
   groupName: "cluster42"
   groupOrder: "7"
