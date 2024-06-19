@@ -10,9 +10,9 @@ spec:
     kind: Rollout
     name: {{ .Values.app.name }}-rollout
   metrics:
-  - resource:
+  - type: Resource
+    resource:
       name: cpu
       target:
         averageUtilization: {{ .Values.app.averageUtilization }}
         type: Utilization
-    type: Resource
