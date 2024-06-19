@@ -4,7 +4,7 @@ metadata:
   name: demo-hpa
   namespace: argocd
 spec:
-  project: demo-project
+  project: default
   source:
     path: stable/demo-hpa
     repoURL: https://github.com/42Cluster-Seoul/helm-charts
