@@ -13,6 +13,6 @@ spec:
   - resource:
       name: cpu
       target:
-        averageUtilization: 70
+        averageUtilization: {{ .Values.app.averageUtilization }}
         type: Utilization
     type: Resource

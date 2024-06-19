@@ -4,7 +4,7 @@ app:
   port: 80
   minReplicas: 1
   maxReplicas: 4
-  targetCPUUtilizationPercentage: 30
+  averageUtilization: 30
   resources:
     requests:
       cpu: "1m"
