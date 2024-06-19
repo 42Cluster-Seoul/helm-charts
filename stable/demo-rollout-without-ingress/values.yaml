@@ -1,6 +1,6 @@
 app:
   name: "demo-rollout"
-  replicas: 2
+  replicas: 1
   image: "giafar/nginx:1.25.1-tcpdump"
   port: 80
   resources:
