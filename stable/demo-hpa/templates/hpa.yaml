@@ -9,4 +9,10 @@ spec:
     apiVersion: argoproj.io/v1alpha1
     kind: Rollout
     name: {{ .Values.app.name }}-rollout
-  targetCPUUtilizationPercentage: {{ .Values.app.targetCPUUtilizationPercentage }}
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 70
+        type: Utilization
+    type: Resource
