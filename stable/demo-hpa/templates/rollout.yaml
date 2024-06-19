@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: {{ .Values.app.name }}-rollout
+  labels:
+    app: {{ .Values.app.name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    notifications.argoproj.io/subscribe.on-rollout-completed.slack-webhook: ""
+spec:
+  replicas: {{ .Values.app.replicas }}
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+      release: {{ .Release.Name }}
+  strategy:
+    canary:
+      canaryService: {{ .Values.app.name }}-canary
+      stableService: {{ .Values.app.name }}-stable
+      steps:
+        - setWeight: 20
+        - pause: {duration: 2s}
+        - setWeight: 40
+        - pause: {duration: 2s}
+        - setWeight: 60
+        - pause: {duration: 2s}
+        - setWeight: 80
+        - pause: {duration: 2s}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+      {{- end }}
+      labels:
+        app: {{ .Values.app.name }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.app.image }}
+          {{- with .Values.app.resources }}
+          resources:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.app.port }}
+              protocol: TCP

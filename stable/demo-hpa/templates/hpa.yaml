@@ -1,0 +1,12 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.app.name }}-hpa
+spec:
+  minReplicas: {{ .Values.app.minReplicas }}
+  maxReplicas: {{ .Values.app.maxReplicas }}
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: {{ .Values.app.name }}-rollout
+  targetCPUUtilizationPercentage: {{ .Values.app.targetCPUUtilizationPercentage }}

@@ -1,0 +1,22 @@
+app:
+  name: "demo-hpa"
+  image: "giafar/nginx:1.25.1-tcpdump"
+  port: 80
+  minReplicas: 2
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 50
+  resources:
+    requests:
+      cpu: "1m"
+      memory: "128Mi"
+    limits:
+      cpu: "1m"
+      memory: "128Mi"
+
+podAnnotations: {}
+podLabels:
+  tier: backend
+
+service:
+  enabled: true
+  port: 80
