@@ -8,7 +8,6 @@ metadata:
   annotations:
     notifications.argoproj.io/subscribe.on-scaling-replica-set.slack-webhook: ""
 spec:
-  replicas: {{ .Values.app.replicas }}
   selector:
     matchLabels:
       app: {{ .Values.app.name }}
