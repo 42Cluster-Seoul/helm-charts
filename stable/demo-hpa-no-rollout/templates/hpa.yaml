@@ -1,0 +1,18 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.app.name }}-hpa
+spec:
+  minReplicas: {{ .Values.app.minReplicas }}
+  maxReplicas: {{ .Values.app.maxReplicas }}
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Deployment
+    name: {{ .Values.app.name }}-deployment
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        averageUtilization: {{ .Values.app.averageUtilization }}
+        type: Utilization
