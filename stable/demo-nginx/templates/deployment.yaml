@@ -5,6 +5,8 @@ metadata:
   labels:
     app: {{ .Values.app.name }}
   namespace: {{ .Release.Namespace | quote }}
+  annotations:
+    notifications.argoproj.io/subscribe.on-scaling-replica-set.slack-webhook: ""
 spec:
   replicas: {{ .Values.app.replicas }}
   selector:
