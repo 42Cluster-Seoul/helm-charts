@@ -50,7 +50,7 @@ spec:
           image: {{ .Values.app.image }}
           {{- with .Values.app.resources }}
           resources:
-            {{- toYaml . | nindent 10 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           ports:
             - name: http
