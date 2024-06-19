@@ -6,7 +6,7 @@ spec:
   minReplicas: {{ .Values.app.minReplicas }}
   maxReplicas: {{ .Values.app.maxReplicas }}
   scaleTargetRef:
-    apiVersion: argoproj.io/v1alpha1
+    apiVersion: apps/v1
     kind: Deployment
     name: {{ .Values.app.name }}-deployment
   metrics:
