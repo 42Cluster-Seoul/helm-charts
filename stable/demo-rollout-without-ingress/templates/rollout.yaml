@@ -9,6 +9,7 @@ metadata:
     heritage: {{ .Release.Service }}
   annotations:
     notifications.argoproj.io/subscribe.on-rollout-completed.slack-webhook: ""
+    notifications.argoproj.io/subscribe.on-scaling-replica-set.slack-webhook: ""
 spec:
   replicas: {{ .Values.app.replicas }}
   revisionHistoryLimit: 3
