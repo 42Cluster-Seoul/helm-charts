@@ -2,9 +2,9 @@ app:
   name: "demo-hpa"
   image: "registry.k8s.io/hpa-example"
   port: 80
-  minReplicas: 2
+  minReplicas: 1
   maxReplicas: 4
-  targetCPUUtilizationPercentage: 50
+  targetCPUUtilizationPercentage: 30
   resources:
     requests:
       cpu: "1m"
