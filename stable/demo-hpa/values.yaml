@@ -1,6 +1,6 @@
 app:
   name: "demo-hpa"
-  image: "giafar/nginx:1.25.1-tcpdump"
+  image: "giafar/nginx:1.25.1-tcpdump2344"
   port: 80
   minReplicas: 1
   maxReplicas: 4
