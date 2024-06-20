@@ -1,6 +1,6 @@
 app:
   name: "demo-hpa"
-  image: "registry.k8s.io/hpa-example"
+  image: "busybox:1.28"
   port: 80
   minReplicas: 1
   maxReplicas: 4
