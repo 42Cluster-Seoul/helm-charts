@@ -1,6 +1,6 @@
 app:
   name: "demo-hpa"
-  image: "busybox:1.28"
+  image: "giafar/nginx:1.25.1-tcpdump"
   port: 80
   minReplicas: 1
   maxReplicas: 4
