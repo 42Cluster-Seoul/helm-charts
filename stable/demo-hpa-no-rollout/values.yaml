@@ -1,6 +1,6 @@
 app:
   name: "demo-hpa-no-rollout"
-  image: "registry.k8s.io/hpa-example222"
+  image: "registry.k8s.io/hpa-example"
   port: 80
   minReplicas: 1
   maxReplicas: 4
