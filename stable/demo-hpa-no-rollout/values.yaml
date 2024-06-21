@@ -1,6 +1,6 @@
 app:
   name: "demo-hpa-no-rollout"
-  image: "registry.k8s.io/hpa-example"
+  image: "nginx:1.27.0-perl"
   port: 80
   minReplicas: 1
   maxReplicas: 4
