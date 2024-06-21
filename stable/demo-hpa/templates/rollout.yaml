@@ -11,6 +11,7 @@ metadata:
     notifications.argoproj.io/subscribe.on-rollout-completed.slack-webhook: ""
     notifications.argoproj.io/subscribe.on-rollout-aborted.slack-webhook: ""
     notifications.argoproj.io/subscribe.on-rollout-paused.slack-webhook: ""
+    notifications.argoproj.io/subscribe.on-purple.slack-webhook: ""
 spec:
   revisionHistoryLimit: 3
   selector:
