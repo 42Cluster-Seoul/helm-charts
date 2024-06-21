@@ -20,13 +20,7 @@ spec:
       canaryService: {{ .Values.app.name }}-canary
       stableService: {{ .Values.app.name }}-stable
       steps:
-        - setWeight: 20
-        - pause: {duration: 1s}
-        - setWeight: 40
-        - pause: {duration: 1s}
-        - setWeight: 60
-        - pause: {duration: 1s}
-        - setWeight: 80
+        - setWeight: 50
         - pause: {duration: 1s}
   template:
     metadata:
