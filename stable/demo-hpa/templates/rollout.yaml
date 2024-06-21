@@ -8,7 +8,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
   annotations:
-    notifications.argoproj.io/subscribe.on-purple.slack-webhook: ""
+    notifications.argoproj.io/subscribe.slack-42cluster-argocd: ""
 spec:
   revisionHistoryLimit: 3
   selector:
