@@ -13,6 +13,18 @@ app:
       limits:
         cpu: "250m"
         memory: "64Mi"
+  frontend:
+    name: "mogle-frontend"
+    replicas: 1
+    image: "joonhyeokhan/mogle-frontend:latest"
+    port: 80
+    resources:
+      requests:
+        cpu: "25m"
+        memory: "32Mi"
+      limits:
+        cpu: "250m"
+        memory: "64Mi"
 
 podAnnotations: {}
 podLabels:
