@@ -33,7 +33,7 @@ podLabels:
 ingress:
   enabled: true
   className: alb
-  host: "www.42cluster.com"
+  host: "www.seongtaek.com"
   path: /
   pathType: Prefix
   groupName: "cluster42"
