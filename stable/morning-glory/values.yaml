@@ -38,7 +38,7 @@ ingress:
   pathType: Prefix
   groupName: "cluster42"
   groupOrder: "7"
-  certificateArn: "arn:aws:acm:ap-northeast-2:738612635754:certificate/f0377659-182c-4057-a5e9-4d6488a232e2"
+  certificateArn: "arn:aws:acm:ap-northeast-2:738612635754:certificate/5e628228-fa1e-4ea6-ae9b-204e244a2231"
 
 service:
   enabled: true
