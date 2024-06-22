@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    path: stable/open-umbrella
+    path: stable/open-umbrella-s3
     repoURL: https://github.com/42Cluster-Seoul/helm-charts
     targetRevision: HEAD
     helm:
