@@ -1,0 +1,33 @@
+app:
+  name: "open-umbrella"
+  backend:
+    configMapName: "umb-backend"
+    name: "open-umbrella-backend"
+    replicas: 1
+    image: "joonhyeokhan/openumbrella-backend:latest"
+    port: 3000
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "250m"
+        memory: "256Mi"
+
+podAnnotations: {}
+podLabels:
+  tier: backend
+
+ingress:
+  enabled: true
+  className: alb
+  host: "www.joonhan.link"
+  path: /
+  pathType: Prefix
+  groupName: "cluster42"
+  groupOrder: "8"
+  certificateArn: "arn:aws:acm:ap-northeast-2:738612635754:certificate/59425a64-08b5-4fa6-8d50-cec6fca44e2f"
+
+service:
+  enabled: true
+  port: 80

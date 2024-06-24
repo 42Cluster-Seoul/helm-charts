@@ -8,11 +8,23 @@ app:
     port: 3001
     resources:
       requests:
-        cpu: "25m"
-        memory: "32Mi"
+        cpu: "100m"
+        memory: "64Mi"
+      limits:
+        cpu: "300m"
+        memory: "256Mi"
+  frontend:
+    name: "mogle-frontend"
+    replicas: 1
+    image: "joonhyeokhan/mogle-frontend:latest"
+    port: 80
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
       limits:
         cpu: "250m"
-        memory: "64Mi"
+        memory: "128Mi"
 
 podAnnotations: {}
 podLabels:
@@ -21,12 +33,12 @@ podLabels:
 ingress:
   enabled: true
   className: alb
-  host: "www.42cluster.com"
+  host: "www.seongtaek.com"
   path: /
   pathType: Prefix
   groupName: "cluster42"
   groupOrder: "7"
-  certificateArn: "arn:aws:acm:ap-northeast-2:738612635754:certificate/f0377659-182c-4057-a5e9-4d6488a232e2"
+  certificateArn: "arn:aws:acm:ap-northeast-2:738612635754:certificate/5e628228-fa1e-4ea6-ae9b-204e244a2231"
 
 service:
   enabled: true
