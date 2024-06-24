@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.app.name }}-deployment
   labels:
     app: {{ .Values.app.name }}
-  namespace: {{ .Release.Namespace | quote }}
+  namespace: hpa
 spec:
   selector:
     matchLabels:
