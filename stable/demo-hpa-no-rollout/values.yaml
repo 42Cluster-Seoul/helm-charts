@@ -1,6 +1,6 @@
 app:
   name: "demo-hpa-no-rollout"
-  image: "nginx:1.27.0-perl22"
+  image: "nginx:1.27.0-perl"
   port: 80
   minReplicas: 1
   maxReplicas: 4
