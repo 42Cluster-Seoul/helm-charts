@@ -1,14 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: demo-hpa-no-rollout
+  name: demo-rollout
   namespace: argocd
-  annotations:
-    notifications.argoproj.io/subscribe.slack-42cluster-argocd: ""
 spec:
-  project: default
+  project: demo-project
   source:
-    path: stable/demo-hpa-no-rollout
+    path: demo/demo-rollout
     repoURL: https://github.com/42Cluster-Seoul/helm-charts
     targetRevision: HEAD
     helm:
@@ -16,7 +14,7 @@ spec:
         - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: morning-glory
   syncPolicy:
     automated:
       prune: true

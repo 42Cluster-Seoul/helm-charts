@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: demo-rollout
+  name: demo-nginx
   namespace: argocd
 spec:
-  project: demo-project
+  project: default
   source:
-    path: stable/demo-rollout-without-ingress
+    path: demo/demo-nginx
     repoURL: https://github.com/42Cluster-Seoul/helm-charts
     targetRevision: HEAD
     helm:
@@ -14,6 +14,8 @@ spec:
         - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: morning-glory
+    namespace: default
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
+      selfHeal: true
