@@ -1,6 +1,6 @@
 app:
   name: "demo-hpa"
-  image: "argoproj/rollouts-demo:green"
+  image: "argoproj/rollouts-demo:green22"
   port: 80
   minReplicas: 1
   maxReplicas: 4
