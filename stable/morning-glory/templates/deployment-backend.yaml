@@ -28,13 +28,13 @@ spec:
       - image: {{ .Values.app.backend.image }}
         name: {{ .Values.app.backend.name }}
         {{- with .Values.app.backend.resources }}
-        volumeMounts:
-          - name: mogle-backend-persistent
-            mountPath: /var/log/nginx
-      volumes:
-      - name: mogle-backend-persistent
-        persistentVolumeClaim:
-          claimName: mogle-backend-pvc
+      #   volumeMounts:
+      #     - name: mogle-backend-persistent
+      #       mountPath: /var/log/nginx
+      # volumes:
+      # - name: mogle-backend-persistent
+      #   persistentVolumeClaim:
+      #     claimName: mogle-backend-pvc
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
