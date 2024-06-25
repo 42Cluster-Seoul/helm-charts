@@ -30,7 +30,7 @@ spec:
         {{- with .Values.app.frontend.resources }}
         volumeMounts:
           - name: mogle-frontend-persistent
-            mountPath: /var/log
+            mountPath: /var/log/nginx
       volumes:
       - name: mogle-frontend-persistent
         persistentVolumeClaim:
