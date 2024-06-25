@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: mogle
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: mogle
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      nodeSelector:
+       topology.ebs.csi.aws.com/zone: ap-northeast-2a
+       alpha.eksctl.io/nodegroup-name: ng2
+      containers:
+      - name: postgres
+        image: postgres:15.5-alpine3.18
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: password
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data/
+          name: postgres-pvc
+        - mountPath: /docker-entrypoint-initdb.d
+          name: postgresql-initdb
+      volumes:
+      - name: postgres-pvc
+        persistentVolumeClaim:
+          claimName: postgres-pvc
+      - name: postgresql-initdb
+        configMap:
+          name: postgresql-initdb-config

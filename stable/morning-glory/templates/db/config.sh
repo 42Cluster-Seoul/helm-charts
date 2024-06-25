@@ -1,0 +1,1 @@
+kubectl create configmap postgresql-initdb-config -n mogle --from-file=init-sql.sql
