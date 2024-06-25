@@ -1,0 +1,45 @@
+app:
+  name: "morning-glory"
+  backend:
+    configMapName: "mogle-backend-cm"
+    name: "morning-glory-backend"
+    replicas: 1
+    image: "joonhyeokhan/mogle-backend:latest"
+    port: 3001
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "64Mi"
+      limits:
+        cpu: "300m"
+        memory: "256Mi"
+  frontend:
+    name: "mogle-frontend"
+    replicas: 1
+    image: "joonhyeokhan/mogle-frontend:latest"
+    port: 80
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+      limits:
+        cpu: "250m"
+        memory: "128Mi"
+
+podAnnotations: {}
+podLabels:
+  tier: backend
+
+ingress:
+  enabled: true
+  className: alb
+  host: "www.seongtaek.com"
+  path: /
+  pathType: Prefix
+  groupName: "cluster42"
+  groupOrder: "7"
+  certificateArn: "arn:aws:acm:ap-northeast-2:738612635754:certificate/5e628228-fa1e-4ea6-ae9b-204e244a2231"
+
+service:
+  enabled: true
+  port: 80

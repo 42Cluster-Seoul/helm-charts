@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  init-sql.sql: CREATE DATABASE "42mogle-default";
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: postgresql-initdb-config
+  namespace: mogle

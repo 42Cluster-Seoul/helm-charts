@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.backend.name }}
+  labels:
+    app: {{ .Values.app.backend.name }}
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  replicas: {{ .Values.app.backend.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.backend.name }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+      {{- end }}
+      labels:
+        app: {{ .Values.app.backend.name }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      nodeSelector:
+       alpha.eksctl.io/nodegroup-name: ng1
+      containers:
+      - image: {{ .Values.app.backend.image }}
+        name: {{ .Values.app.backend.name }}
+        {{- with .Values.app.backend.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: {{ .Values.app.backend.port }}
+        env:
+          - name: REDIRECT_URI
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: REDIRECT_URI
+          - name: TODAY_WORD
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: TODAY_WORD
+          - name: JWT_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: JWT_PASSWORD
+          - name: DB_DATABASE_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: DB_DATABASE_NAME
+          - name: DB_SYNC
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: DB_SYNC
+          - name: PAYLOAD_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: PAYLOAD_CLIENT_ID
+          - name: PAYLOAD_CLIENT_SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.app.backend.configMapName }}
+                key: PAYLOAD_CLIENT_SECRET
+        volumeMounts:
+          - name: mogle-backend-persistent
+            mountPath: /var/log/nginx
+      volumes:
+      - name: mogle-backend-persistent
+        persistentVolumeClaim:
+          claimName: mogle-backend-pvc
