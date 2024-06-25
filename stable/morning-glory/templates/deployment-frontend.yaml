@@ -25,7 +25,7 @@ spec:
       nodeSelector:
        alpha.eksctl.io/nodegroup-name: ng1
       containers:
-      - image: {{ .Values.app.frontend.image }}
+      - image: {{ .Values.app.frontend.image }}+
         name: {{ .Values.app.frontend.name }}
         {{- with .Values.app.frontend.resources }}
         resources:
