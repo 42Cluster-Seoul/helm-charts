@@ -28,13 +28,6 @@ spec:
       - image: {{ .Values.app.frontend.image }}
         name: {{ .Values.app.frontend.name }}
         {{- with .Values.app.frontend.resources }}
-        volumeMounts:
-          - name: mogle-frontend-persistent
-            mountPath: /var/log/nginx
-      volumes:
-      - name: mogle-frontend-persistent
-        persistentVolumeClaim:
-          claimName: mogle-frontend-pvc
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
@@ -42,3 +35,10 @@ spec:
           - name: http
             protocol: TCP
             containerPort: {{ .Values.app.frontend.port }}
+        volumeMounts:
+          - name: mogle-frontend-persistent
+            mountPath: /var/log/nginx
+      volumes:
+      - name: mogle-frontend-persistent
+        persistentVolumeClaim:
+          claimName: mogle-frontend-pvc
