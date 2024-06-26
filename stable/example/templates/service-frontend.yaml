@@ -1,0 +1,22 @@
+{{ if .Values.service.frontend }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: "{{ .Chart.Name }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app.kubernetes.io/component: frontend
+  name: "{{ .Release.Name }}-frontend-svc"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  ports:
+    - port: {{ .Values.service.frontend.port }}
+      protocol: TCP
+      name: http
+      targetPort: {{ .Values.application.frontend.port }}
+  selector:
+    app: "{{ .Chart.Name }}"
+    component: frontend
+{{ end }}
