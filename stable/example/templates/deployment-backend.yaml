@@ -41,7 +41,7 @@ spec:
         env:
           {{- $chartName := .Chart.Name }}
           {{- range $key, $value := .Values.application.backend.env }}
-          - name: {{ $key }}
+          - name: "{{ $key }}"
             valueFrom:
               configMapKeyRef:
                 name: "{{ $chartName }}-backend-cm"
