@@ -1,0 +1,55 @@
+# application 여러 개를 고려해서 42cluster의 argocd는 project 단위로 서비스 계정을 관리한다.
+# ex) 운영서비스, 테스트서비스
+{{ if .Values.project }}
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  labels:
+    app.kubernetes.io/name: "{{ .Chart.Name }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  name: "{{ .Release.Name }}-project"
+  namespace: argocd
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: {{ .Values.project.description }}
+
+  # Allow manifests to deploy from any Git repos
+  sourceRepos:
+    - "https://github.com/42Cluster-Seoul/helm-charts"
+    - "git@github.com:42Cluster-Seoul/manifests.git"
+
+  # Only permit applications to deploy to the guestbook namespace in the same cluster
+  # Destination clusters can be identified by 'server', 'name', or both.
+  destinations:
+    - namespace: {{ .Values.application.name }}
+      server: https://kubernetes.default.svc
+      name: in-cluster
+
+  roles:
+    # A role which provides read-only access to all applications in the project
+    - name: read-only
+      description: "Read-only privileges to {{ .Values.application.name }} applications"
+      policies:
+        - p, proj:{{ .Values.application.name }}:read-only, applications, get, {{ .Values.application.name }}/*, allow
+        - p, proj:{{ .Values.application.name }}:read-only, projects, get, {{ .Values.application.name }}/*, allow
+        - p, proj:{{ .Values.application.name }}:read-only, logs, get, {{ .Values.application.name }}/*, allow
+
+    # A role which provides deployment to all applications in the project
+    - name: dev
+      description: "Deployment privileges to {{ .Values.application.name }} applications"
+      policies:
+        - p, proj:{{ .Values.application.name }}:dev, applications, get, {{ .Values.application.name }}/*, allow
+        - p, proj:{{ .Values.application.name }}:dev, applications, create, {{ .Values.application.name }}/*, allow
+        - p, proj:{{ .Values.application.name }}:dev, applications, update, {{ .Values.application.name }}/*, allow
+        - p, proj:{{ .Values.application.name }}:dev, applications, delete, {{ .Values.application.name }}/*, allow
+        - p, proj:{{ .Values.application.name }}:dev, applications, sync, {{ .Values.application.name }}/*, allow
+
+        - p, proj:{{ .Values.application.name }}:dev, projects, get, {{ .Values.application.name }}/*, allow
+
+        - p, proj:{{ .Values.application.name }}:dev, logs, get, {{ .Values.application.name }}/*, allow
+
+{{ end }}
