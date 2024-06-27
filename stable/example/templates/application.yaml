@@ -20,7 +20,7 @@ spec:
       targetRevision: HEAD
       helm:
         valueFiles:
-          - "$manifest-git/{{ .Values.application.name }}/values.yaml"
+          - "$manifests-git/{{ .Values.application.name }}/values.yaml"
     - repoURL: "git@github.com:42Cluster-Seoul/manifests.git"
       targetRevision: HEAD
       ref: manifests-git # repository Path 정보를 manifests-git 변수에 저장
