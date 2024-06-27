@@ -29,6 +29,9 @@ spec:
       server: https://kubernetes.default.svc
       name: in-cluster
 
+  sourceNamespaces:
+  - example
+
   roles:
     # A role which provides read-only access to all applications in the project
     - name: read-only
