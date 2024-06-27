@@ -45,7 +45,7 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: "{{ $chartName }}-backend-cm"
-                key: {{ $value }}
+                key: "{{ $value }}"
           {{- end }}
         {{- end }}
 {{- end }}
