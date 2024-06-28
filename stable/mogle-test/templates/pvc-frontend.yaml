@@ -10,9 +10,6 @@ metadata:
   name: "{{ .Release.Name }}-frontend-pvc"
   namespace: "{{ .Release.Namespace }}"
 spec:
-  selector:
-    matchLables:
-      app: "{{ .Release.Name }}-deployment-frontend"
   accessModes:
     - ReadWriteMany
   storageClassName: "efs-sc"

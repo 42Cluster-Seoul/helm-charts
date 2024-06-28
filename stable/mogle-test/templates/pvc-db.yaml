@@ -10,9 +10,6 @@ metadata:
   name: "{{ .Release.Name }}-db-pvc"
   namespace: "{{ .Release.Namespace }}"
 spec:
-  selector:
-    matchLables:
-      app: "{{ .Release.Name }}-{{ .Values.db.type }}"
   accessModes:
     - ReadWriteOnce
   storageClassName: ""
