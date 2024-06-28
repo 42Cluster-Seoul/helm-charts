@@ -17,6 +17,6 @@ spec:
       name: http
       targetPort: {{ .Values.application.frontend.port }}
   selector:
-    app: "{{ .Chart.Name }}"
+    app: "{{ .Release.Name }}-frontend"
     component: frontend
 {{ end }}
