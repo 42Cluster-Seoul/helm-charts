@@ -10,7 +10,7 @@ spec:
     protocol: TCP
     targetPort: {{ .Values.db.port }}
   selector:
-    app: "{{ .Chart.Name }}-{{ .Values.db.type }}"
+    app: "{{ .Release.Name }}-{{ .Values.db.type }}"
   clusterIP: None
 ---
 apiVersion: apps/v1
@@ -24,11 +24,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "{{ .Chart.Name }}-{{ .Values.db.type }}"
+      app: "{{ .Release.Name }}-{{ .Values.db.type }}"
   template:
     metadata:
       labels:
-        app: "{{ .Chart.Name }}-{{ .Values.db.type }}"
+        app: "{{ .Release.Name }}-{{ .Values.db.type }}"
     spec:
       nodeSelector:
        topology.ebs.csi.aws.com/zone: "{{ .Values.ebs.az }}"
