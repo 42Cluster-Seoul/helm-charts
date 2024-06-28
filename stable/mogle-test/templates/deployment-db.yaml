@@ -62,7 +62,7 @@ spec:
       {{- with .Values.db.volumes }}
         {{ toYaml . | nindent 6 }}
       {{- end }}
-      - name: "{{ .Values.db.type }}-pvc"
+      - name: "{{ .Values.db.type }}-db-pvc"
         persistentVolumeClaim:
           claimName: "{{ .Release.Name }}-db-pvc"
 {{- end }}
