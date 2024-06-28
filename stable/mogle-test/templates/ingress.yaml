@@ -30,13 +30,13 @@ spec:
         backend:
           service:
             {{- if .Values.service.frontend }}
-            name: "{{ .Release.Name }}-backend-svc"
+            name: "{{ .Release.Name }}-frontend-svc"
             port:
               number: {{ .Values.service.backend.port }}
             {{- else }}
-            name: "{{ .Release.Name }}-frontend-svc"
+            name: "{{ .Release.Name }}-backend-svc"
             port:
-              number: {{ .Values.service.frontend.port }}
+              number: {{ .Values.service.backend.port }}
             {{- end }}
 {{- end }}
 {{- end }}
