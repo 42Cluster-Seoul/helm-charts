@@ -55,7 +55,7 @@ spec:
             {{ toYaml . | nindent 12 }}
           {{- end }}
       volumes:
-      {{- with .Values.application.backend.volumes }}
-        {{ toYaml . | nindent 6 }}
-      {{- end }}
+        - name: "{{ .Values.application.name  }}-backend-persistent"
+          persistentVolumeClaim:
+            claimName: "{{ .Release.Name }}-backend-pvc"
 {{- end }}
