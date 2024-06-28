@@ -32,7 +32,7 @@ spec:
             {{- if .Values.service.frontend }}
             name: "{{ .Release.Name }}-frontend-svc"
             port:
-              number: {{ .Values.service.backend.port }}
+              number: {{ .Values.service.frontend.port }}
             {{- else }}
             name: "{{ .Release.Name }}-backend-svc"
             port:
