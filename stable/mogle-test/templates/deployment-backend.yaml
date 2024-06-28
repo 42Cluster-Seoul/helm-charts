@@ -1,0 +1,61 @@
+{{- if eq .Values.deployment.strategy "rolling" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: "{{ .Chart.Name }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app.kubernetes.io/component: backend
+  name: "{{ .Release.Name }}-deployment-backend"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  selector:
+    matchLabels:
+      app: "{{ .Release.Name }}-backend"
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+      {{- end }}
+      labels:
+        app: "{{ .Release.Name }}-backend"
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      nodeSelector:
+        alpha.eksctl.io/nodegroup-name: "{{ .Values.application.frontend.nodeGroupName }}"
+      containers:
+      - image: {{ .Values.application.backend.image }}
+        name: "{{ .Release.Name }}-backend"
+        {{- with .Values.application.backend.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: {{ .Values.application.backend.port }}
+        {{- if .Values.application.backend.env }}
+        env:
+          {{- $chartName := .Chart.Name }}
+          {{- range $key, $value := .Values.application.backend.env }}
+          - name: "{{ $key }}"
+            valueFrom:
+              configMapKeyRef:
+                name: "{{ $chartName }}-backend-cm"
+                key: "{{ $key }}"
+          {{- end }}
+        {{- end }}
+        volumeMounts:
+          {{- with .Values.application.backend.volumeMounts }}
+            {{ toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        {{- with .Values.application.backend.volumes }}
+          {{ toYaml . | nindent 12 }}
+        {{- end }}
+{{- end }}

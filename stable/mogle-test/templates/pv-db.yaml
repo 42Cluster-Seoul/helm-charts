@@ -1,0 +1,25 @@
+{{- if .Values.ebs }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    app.kubernetes.io/name: "{{ .Chart.Name }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  name: "{{ .Release.Name }}-db-pv"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  claimRef:
+    name: "{{ .Release.Name }}-db-pvc"
+    namespace: "{{ .Release.Namespace }}"
+  capacity:
+    storage: "{{ .Values.pv.db.storage }}"
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: "{{ .Values.pv.db.storageClassName }}"
+  csi: 
+    driver: ebs.csi.aws.com
+    volumeHandle: "{{ .Values.ebs.volumeHandle }}"
+{{- end }}
