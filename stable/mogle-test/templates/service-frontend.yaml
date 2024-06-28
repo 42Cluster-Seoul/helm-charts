@@ -7,7 +7,6 @@ metadata:
     app.kubernetes.io/instance: "{{ .Release.Name }}"
     app.kubernetes.io/managed-by: "{{ .Release.Service }}"
     helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    app.kubernetes.io/component: frontend
   name: "{{ .Release.Name }}-frontend-svc"
   namespace: "{{ .Release.Namespace }}"
 spec:
@@ -18,5 +17,4 @@ spec:
       targetPort: {{ .Values.application.frontend.port }}
   selector:
     app: "{{ .Release.Name }}-frontend"
-    component: frontend
 {{ end }}
