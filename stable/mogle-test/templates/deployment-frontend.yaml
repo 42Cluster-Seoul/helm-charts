@@ -44,8 +44,7 @@ spec:
             {{ toYaml . | nindent 12 }}
           {{- end }}
       volumes:
-        {{- with .Values.application.frontend.volumes }}
-          {{ toYaml . | nindent 10 }}
-        {{- end }}
-        
+      {{- with .Values.application.frontend.volumes }}
+        {{ toYaml . | nindent 6 }}
+      {{- end }}
 {{- end }}
