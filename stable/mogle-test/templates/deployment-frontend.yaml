@@ -40,11 +40,10 @@ spec:
             protocol: TCP
             containerPort: {{ .Values.application.frontend.port }}
         volumeMounts:
-          {{- with .Values.application.frontend.volumeMounts }}
-            {{ toYaml . | nindent 12 }}
-          {{- end }}
+          - name: "{{ .Values.application.name }}-frontend-persistent"
+            mountPath: "/var/log/nginx"
       volumes:
-        - name: "{{ .Values.application.name  }}-frontend-persistent"
+        - name: "{{ .Values.application.name }}-frontend-persistent"
           persistentVolumeClaim:
             claimName: "{{ .Release.Name }}-frontend-pvc"
 {{- end }}

@@ -51,11 +51,10 @@ spec:
           {{- end }}
         {{- end }}
         volumeMounts:
-          {{- with .Values.application.backend.volumeMounts }}
-            {{ toYaml . | nindent 12 }}
-          {{- end }}
+          - name: "{{ .Values.application.name }}-backend-persistent"
+            mountPath: "/var/log/nginx"
       volumes:
-        - name: "{{ .Values.application.name  }}-backend-persistent"
+        - name: "{{ .Values.application.name }}-backend-persistent"
           persistentVolumeClaim:
             claimName: "{{ .Release.Name }}-backend-pvc"
 {{- end }}
