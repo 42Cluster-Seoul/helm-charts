@@ -11,7 +11,7 @@ metadata:
   namespace: "{{ .Release.Namespace }}"
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: "efs-sc"
   resources:
     requests:
