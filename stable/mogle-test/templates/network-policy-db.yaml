@@ -12,7 +12,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: "{{ .Chart.Name }}-db"
+      app: "{{ .Release.Name }}-{{ .Values.db.type }}"
   policyTypes:
     - Ingress
     - Egress
@@ -20,7 +20,7 @@ spec:
   - from:
       - podSelector:
           matchLabels:
-            app: "{{ .Chart.Name }}-backend"
+            app: "{{ .Release.Name }}-backend"
         namespaceSelector:
           matchLabels:
             kubernetes.io/metadata.name: "{{ .Chart.Name }}"
