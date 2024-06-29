@@ -16,6 +16,7 @@ spec:
   policyTypes:
     - Ingress
   ingress:
+  {{- if .Values.application.frontend }}
   - from:
       - podSelector:
           matchLabels:
@@ -23,4 +24,5 @@ spec:
         namespaceSelector:
           matchLabels:
             kubernetes.io/metadata.name: "{{ .Chart.Name }}"
+    {{- end }}
 {{- end }}

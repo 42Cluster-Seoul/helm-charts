@@ -53,8 +53,6 @@ spec:
                 key: "{{ $key }}"
           {{- end }}
         volumeMounts:
-        - mountPath: "/var/lib/{{ .Values.db.type }}/data/"
-          name: "{{ .Values.db.type }}-db-pvc"
         {{- with .Values.db.volumeMounts }}
           {{ toYaml . | nindent 8 }}
         {{- end }}
