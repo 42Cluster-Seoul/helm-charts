@@ -1,15 +1,18 @@
+{{- if eq .Values.deployment.strategy "rolling" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.app.frontend.name }}
   labels:
-    app: {{ .Values.app.frontend.name }}
-  namespace: {{ .Release.Namespace | quote }}
+    app.kubernetes.io/name: "{{ .Chart.Name }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  name: "{{ .Release.Name }}-deployment-frontend"
+  namespace: "{{ .Release.Namespace }}"
 spec:
-  replicas: {{ .Values.app.frontend.replicas }}
   selector:
     matchLabels:
-      app: {{ .Values.app.frontend.name }}
+      app: "{{ .Release.Name }}-frontend"
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -17,28 +20,29 @@ spec:
         {{- toYaml .Values.podAnnotations | nindent 8 }}
       {{- end }}
       labels:
-        app: {{ .Values.app.frontend.name }}
+        app: "{{ .Release.Name }}-frontend"
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
       nodeSelector:
-       alpha.eksctl.io/nodegroup-name: ng1
+        alpha.eksctl.io/nodegroup-name: "{{ .Values.application.frontend.nodeGroupName }}"
       containers:
-      - image: {{ .Values.app.frontend.image }}
-        name: {{ .Values.app.frontend.name }}
-        {{- with .Values.app.frontend.resources }}
+      - image: {{ .Values.application.frontend.image }}
+        name: "{{ .Release.Name }}-frontend"
+        {{- with .Values.application.frontend.resources }}
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         ports:
           - name: http
             protocol: TCP
-            containerPort: {{ .Values.app.frontend.port }}
+            containerPort: {{ .Values.application.frontend.port }}
         volumeMounts:
-          - name: mogle-frontend-persistent
-            mountPath: /var/log/nginx
+          - name: "{{ .Values.application.name }}-frontend-persistent"
+            mountPath: "/var/log/nginx"
       volumes:
-      - name: mogle-frontend-persistent
-        persistentVolumeClaim:
-          claimName: mogle-frontend-pvc
+        - name: "{{ .Values.application.name }}-frontend-persistent"
+          persistentVolumeClaim:
+            claimName: "{{ .Release.Name }}-frontend-pvc"
+{{- end }}

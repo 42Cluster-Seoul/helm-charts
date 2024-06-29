@@ -1,20 +1,19 @@
-{{ if .Values.service.backend }}
+{{- if .Values.pvc.backend }}
 apiVersion: v1
-kind: Service
+kind: PersistentVolumeClaim
 metadata:
   labels:
     app.kubernetes.io/name: "{{ .Chart.Name }}"
     app.kubernetes.io/instance: "{{ .Release.Name }}"
     app.kubernetes.io/managed-by: "{{ .Release.Service }}"
     helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-  name: "{{ .Release.Name }}-backend-svc"
+  name: "{{ .Release.Name }}-backend-pvc"
   namespace: "{{ .Release.Namespace }}"
 spec:
-  ports:
-    - port: {{ .Values.service.backend.port }}
-      protocol: TCP
-      name: http
-      targetPort: {{ .Values.application.backend.port }}
-  selector:
-    app: "{{ .Release.Name }}-backend"
-{{ end }}
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "efs-sc"
+  resources:
+    requests:
+      storage: "{{ .Values.pvc.backend.storage }}"
+{{- end }}

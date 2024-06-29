@@ -1,15 +1,18 @@
+{{- if eq .Values.deployment.strategy "rolling" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.app.backend.name }}
   labels:
-    app: {{ .Values.app.backend.name }}
-  namespace: {{ .Release.Namespace | quote }}
+    app.kubernetes.io/name: "{{ .Chart.Name }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  name: "{{ .Release.Name }}-deployment-backend"
+  namespace: "{{ .Release.Namespace }}"
 spec:
-  replicas: {{ .Values.app.backend.replicas }}
   selector:
     matchLabels:
-      app: {{ .Values.app.backend.name }}
+      app: "{{ .Release.Name }}-backend"
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -17,64 +20,40 @@ spec:
         {{- toYaml .Values.podAnnotations | nindent 8 }}
       {{- end }}
       labels:
-        app: {{ .Values.app.backend.name }}
+        app: "{{ .Release.Name }}-backend"
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
       nodeSelector:
-       alpha.eksctl.io/nodegroup-name: ng1
+        alpha.eksctl.io/nodegroup-name: "{{ .Values.application.backend.nodeGroupName }}"
       containers:
-      - image: {{ .Values.app.backend.image }}
-        name: {{ .Values.app.backend.name }}
-        {{- with .Values.app.backend.resources }}
+      - image: {{ .Values.application.backend.image }}
+        name: "{{ .Release.Name }}-backend"
+        {{- with .Values.application.backend.resources }}
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         ports:
           - name: http
             protocol: TCP
-            containerPort: {{ .Values.app.backend.port }}
+            containerPort: {{ .Values.application.backend.port }}
+        {{- if .Values.application.backend.env }}
         env:
-          - name: REDIRECT_URI
+          {{- $chartName := .Chart.Name }}
+          {{- range $key, $value := .Values.application.backend.env }}
+          - name: "{{ $key }}"
             valueFrom:
               configMapKeyRef:
-                name: {{ .Values.app.backend.configMapName }}
-                key: REDIRECT_URI
-          - name: TODAY_WORD
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .Values.app.backend.configMapName }}
-                key: TODAY_WORD
-          - name: JWT_PASSWORD
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .Values.app.backend.configMapName }}
-                key: JWT_PASSWORD
-          - name: DB_DATABASE_NAME
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .Values.app.backend.configMapName }}
-                key: DB_DATABASE_NAME
-          - name: DB_SYNC
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .Values.app.backend.configMapName }}
-                key: DB_SYNC
-          - name: PAYLOAD_CLIENT_ID
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .Values.app.backend.configMapName }}
-                key: PAYLOAD_CLIENT_ID
-          - name: PAYLOAD_CLIENT_SECRET
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .Values.app.backend.configMapName }}
-                key: PAYLOAD_CLIENT_SECRET
+                name: "{{ $chartName }}-backend-cm"
+                key: "{{ $key }}"
+          {{- end }}
+        {{- end }}
         volumeMounts:
-          - name: mogle-backend-persistent
-            mountPath: /var/log/nginx
+          - name: "{{ .Values.application.name }}-backend-persistent"
+            mountPath: "/var/log/nginx"
       volumes:
-      - name: mogle-backend-persistent
-        persistentVolumeClaim:
-          claimName: mogle-backend-pvc
+        - name: "{{ .Values.application.name }}-backend-persistent"
+          persistentVolumeClaim:
+            claimName: "{{ .Release.Name }}-backend-pvc"
+{{- end }}

@@ -1,0 +1,35 @@
+{{- if .Values.db }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    app.kubernetes.io/name: "{{ .Chart.Name }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  name: "{{ .Release.Name }}-db-network-policy"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  podSelector:
+    matchLabels:
+      app: "{{ .Release.Name }}-{{ .Values.db.type }}"
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+  - from:
+      - podSelector:
+          matchLabels:
+            app: "{{ .Release.Name }}-backend"
+        namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: "{{ .Chart.Name }}"
+    ports:
+      - protocol: TCP
+        port: {{ .Values.db.port }}
+  egress:
+  - to:        
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: "{{ .Chart.Name }}"
+{{- end }}

@@ -1,17 +1,20 @@
-{{- if .Values.service.enabled }}
+{{ if .Values.service.frontend }}
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: {{ .Values.app.frontend.name }}
-  name: {{ .Values.app.frontend.name }}
-  namespace: {{ .Release.Namespace | quote }}
+    app.kubernetes.io/name: "{{ .Chart.Name }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  name: "{{ .Release.Name }}-frontend-svc"
+  namespace: "{{ .Release.Namespace }}"
 spec:
   ports:
-  - port: {{ .Values.service.port }}
-    protocol: TCP
-    name: http
-    targetPort: {{ .Values.app.frontend.port }}
+    - port: {{ .Values.service.frontend.port }}
+      protocol: TCP
+      name: http
+      targetPort: {{ .Values.application.frontend.port }}
   selector:
-    app: {{ .Values.app.frontend.name }}
-{{- end }}
+    app: "{{ .Release.Name }}-frontend"
+{{ end }}
